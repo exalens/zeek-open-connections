@@ -7,3 +7,6 @@ This Zeek plugin will cause Zeek to periodically write out connection informatio
 The entries are written out at an interval that is specified by the user. The default interval is to write out an entry after the connection has been open for 1 hour and then every hour after that first hour.
 
 This project is based on the excellent work by Corelight and retains the copyright information within the main script: https://github.com/corelight/zeek-long-connections
+
+# Changelog
+7th September 2023: Fixed function name (set_conn_log_data_hack -> set_conn_log_data_hack_open)
