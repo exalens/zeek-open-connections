@@ -35,7 +35,7 @@
 module Conn;
 
 export {
-function set_conn_log_data_hack(c: connection)
+function set_conn_log_data_hack_open(c: connection)
         {
         Conn::set_conn(c, T);
         }
@@ -52,7 +52,7 @@ module OpenConnection;
 # Each time an entry is written, it contains the TOTAL duration and bytes
 # for the connection, not the incremental from the last entry. The information
 # is identical to what is written out to conn.log
-const ALERT_INTERVAL = 1hr;
+const ALERT_INTERVAL = 1min;
 
 export {
         redef enum Log::ID += { LOG, SSL_LOG };
@@ -77,7 +77,7 @@ function long_callback(c: connection, cnt: count): interval
 
         if ( c$duration >= ALERT_INTERVAL )
                 {
-                Conn::set_conn_log_data_hack(c);
+                Conn::set_conn_log_data_hack_open(c);
                 Log::write(OpenConnection::LOG, c$conn);
                 if ( c?$ssl && |c$ssl$server_name| > 0 )
                         {
@@ -94,4 +94,3 @@ event new_connection(c: connection)
         {
                 ConnPolling::watch(c, long_callback, 1, ALERT_INTERVAL);
         }
-
